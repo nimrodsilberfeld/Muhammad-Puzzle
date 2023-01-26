@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:puzzle/widgets/Board.dart';
 import 'package:puzzle/models/BoardNumber.dart';
 import 'dart:math';
-import 'dart:developer';
 
 class MainGame extends StatefulWidget {
   const MainGame();
