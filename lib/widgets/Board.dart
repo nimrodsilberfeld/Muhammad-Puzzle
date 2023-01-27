@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:puzzle/models/BoardNumber.dart';
+import 'package:puzzle/widgets/NumberTile.dart';
 
 class Board extends StatefulWidget {
   final List<BoardNumber> boardNumbers;
@@ -17,6 +18,10 @@ class _BoardState extends State<Board> {
     inspect(widget.boardNumbers);
     super.initState();
   }
+
+changeTest()=>{
+  // widget.boardNumbers;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -52,24 +57,10 @@ class _BoardState extends State<Board> {
                       crossAxisSpacing: 8,
                       children: List.generate(
                         widget.boardNumbers.length,
-                        (index) => Container(
-                          child: Material(
-                            child: InkWell(
-                              enableFeedback: true,
-                              onTap: () {
-                                print(widget.boardNumbers[index].value);
-                              },
-                              child: Container(
-                                width: boardWidth * 0.20,
-                                height: boardWidth * 0.20,
-                                child: Center(
-                                  child: Text(
-                                    widget.boardNumbers[index].value.toString(),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                        (index) => NumberTile(
+                          boardNumber: widget.boardNumbers[index],
+                          boardWidth: boardWidth,
+                          boardPieceIndex: index,
                         ),
                       ),
                     ),
