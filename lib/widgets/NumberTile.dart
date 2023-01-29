@@ -20,24 +20,19 @@ class NumberTile extends StatefulWidget {
 class _NumberTileState extends State<NumberTile> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Material(
-        color: widget.boardNumber.selectedAsAnswer
-            ? Colors.green[200]
-            : Colors.white30,
-        child: InkWell(
-          enableFeedback: true,
-          onTap: () {
-            print(widget.boardNumber.value);
-          },
-          child: Container(
-            width: widget.boardWidth * 0.20,
-            height: widget.boardWidth * 0.20,
-            child: Center(
-              child: Text(
-                widget.boardNumber.value.toString(),
-              ),
-            ),
+    return Material(
+      color: widget.boardNumber.selectedAsAnswer
+          ? Colors.green[200]
+          : Colors.white54,
+      child: InkWell(
+        enableFeedback: true,
+        onTap: () {
+          print(widget.boardNumber.value);
+        },
+        child: Container(
+          alignment: Alignment.center,
+          child: Text(
+            widget.boardNumber.value.toString(),
           ),
         ),
       ),

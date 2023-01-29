@@ -19,16 +19,21 @@ class _BoardState extends State<Board> {
     super.initState();
   }
 
-changeTest()=>{
-  // widget.boardNumbers;
-}
+  changeTest() => {
+        // widget.boardNumbers;
+      };
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    double boardSpacing = 4;
     final boardHeight = size.height * 0.5;
     final boardWidth = size.width;
+    final ratioHeight = boardHeight / 100;
+    final ratioHeightTest = boardHeight / (100 - boardSpacing);
+
     List<String> test = ["1(0)", "2(0)", "3(0)", "4(0)"];
+
     return Container(
       height: boardHeight,
       width: boardWidth,
@@ -40,45 +45,53 @@ changeTest()=>{
             //main board + right side
             width: boardWidth,
             height: boardHeight * 0.8,
-            color: Colors.yellowAccent,
+            color: Colors.grey,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   //main board
-                  height: boardHeight * 0.8,
+                  height: boardHeight,
                   width: boardWidth * 0.8,
-                  color: Colors.grey,
-                  child: Center(
-                    child: GridView.count(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                      children: List.generate(
-                        widget.boardNumbers.length,
-                        (index) => NumberTile(
-                          boardNumber: widget.boardNumbers[index],
-                          boardWidth: boardWidth,
-                          boardPieceIndex: index,
-                        ),
+                  // color: Colors.grey,
+                  child: GridView.count(
+                    padding: EdgeInsets.zero,
+                    crossAxisCount: 4,
+                    shrinkWrap: false,
+                    childAspectRatio: (boardWidth / ratioHeight) /
+                        (boardHeight / ratioHeight),
+                    mainAxisSpacing: boardSpacing,
+                    crossAxisSpacing: boardSpacing,
+                    children: List.generate(
+                      widget.boardNumbers.length,
+                      (index) => NumberTile(
+                        boardNumber: widget.boardNumbers[index],
+                        boardWidth: boardWidth,
+                        boardPieceIndex: index,
                       ),
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    //right side
-                    color: Colors.amber,
-                    child: GridView.count(
-                      padding: EdgeInsets.symmetric(vertical: 14),
-                      crossAxisCount: 1,
-                      mainAxisSpacing: 10,
-                      children: List.generate(
-                        test.length,
-                        (index) => Center(
-                          child: Text(
-                            test[index],
+                Container(
+                  //right side
+                  color: Colors.amber,
+                  height: boardHeight,
+                  width: boardWidth * 0.2,
+                  child: GridView.count(
+                    // padding: EdgeInsets.symmetric(vertical: 14),
+                    crossAxisCount: 1,
+                    childAspectRatio: (boardWidth / ratioHeight) /
+                        (boardHeight / ratioHeightTest),
+
+                    mainAxisSpacing: boardSpacing,
+                    children: List.generate(
+                      test.length,
+                      (index) => Expanded(
+                        child: Container(
+                          color: Colors.red,
+                          child: Center(
+                            child: Text(
+                              test[index],
+                            ),
                           ),
                         ),
                       ),
@@ -89,22 +102,31 @@ changeTest()=>{
             ),
           ),
           Container(
-            height: boardHeight * 0.15,
+            height: boardHeight * 0.2,
             width: boardWidth * 0.80,
             color: Colors.blue,
-            child: Center(
-              child: Container(
-                width: boardWidth * 0.65,
-                // color: Colors.green,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: test
-                      .map(
-                        (e) => Text(e),
-                      )
-                      .toList(),
+            child: Container(
+              color: Colors.green,
+              child: ListView.separated(
+                itemCount: test.length,
+                scrollDirection: Axis.horizontal,
+                separatorBuilder: (BuildContext context, int index) =>
+                    VerticalDivider(
+                  width: 0,
+                  thickness: boardSpacing,
+                  // color: Colors.black,
                 ),
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    padding: EdgeInsets.zero,
+                    // width: (boardWidth * 0.8) / 4,
+                    child: Center(
+                      child: Text(
+                        test[index],
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           )
